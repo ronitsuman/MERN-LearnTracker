@@ -1,47 +1,57 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 
-const userSchema = mongoose.Schema(
+// User Schema
+const userSchema = new mongoose.Schema(
     {
-        name:{
-            type:String,
-
+        name: {
+            type: String,
+            required: true
         },
-        email:{
-            type:String,
-            required:true,
-            unique:true,
+        email: {
+            type: String,
+            required: true,
+            unique: true
         },
-        password:{
-            type:String,
-            required:true,
+        password: {
+            type: String,
+            required: true,
+            select: false  // Password ko by default query me hide karenge
         },
-        category:{
-            type:String,
-            enum:["Frontend","Backend","Database"],
-            required:true,
+        category: {
+            type: String,
+            enum: ["Frontend", "Backend", "Database"],
+            required: true
+        },
+        role: {
+            type: String,
+            default: 'user'
+        },
+        refreshToken: {
+            type: String,
+            select: false  // Token ko hidden rakhenge taaki query se na aaye
         }
-    }
-    ,{timestamp:true});
+    },
+    { timestamps: true }  // Correct syntax for timestamps
+);
 
-    //jo v data ka structure aur processing hi wo schema me ho 
+// **Pre Save Hook**: Password Hashing
+userSchema.pre("save", async function (next) {
+    // Agar password modify nahi hua, to hashing skip karein
+    if (!this.isModified("password")) return next();
 
-    //pasword hashing before saving  using pre methods
-    userSchema.pre("save",async function (next){
-        //agar password modify ni hua to hashing skip karo
-        if(!this.isModified("password"))return next();
-        //salt ek random string generate krta hai (10 rounds standard)
-        const salt = await bcrypt.genSalt(10);
-        //pasword ko hash kro
-        this.password = await bcrypt.hash(this.password,salt);
-        next(); //next middleware ya save function call hoga 
-    });
+    // Generate Salt (10 rounds recommended)
+    const salt = await bcrypt.genSalt(10);
+    
+    // Password Hash
+    this.password = await bcrypt.hash(this.password, salt);
+    
+    next();
+});
 
-    //method to compare password when login
-    userSchema.methods.matchPassword = async function (enteredPassword) {
-        return await bcrypt.compare(enteredPassword, this.password)
-        
-    }
-    const User = mongoose.model("User",userSchema);
+// **Instance Method**: Password Match Check
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
-    export default User; 
+export const User = mongoose.model("User", userSchema);

@@ -1,11 +1,14 @@
 import express from 'express';
-import userSignup from '../controllers/authcontroller.js';
+import {userLogin, userLogout, userSignup} from '../controllers/authcontroller.js';
 
-const route = express.Router();
+
+export const router = express.Router();
 
 //signuproutes
-route.post('/signup', userSignup)
+router.post('/signup', userSignup);
+
+router.post("/login", userLogin)
+
+router.get('/logout',userLogout)
 
 
-
-module.exports=route;
