@@ -172,20 +172,20 @@ export const forgotPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
 
-        // 📌 1. Check if user exists
+        //  1. Check if user exists
         const user = await User.findOne({ email });
         if (!user) {
             return next(new ErrorHandler("User not found", 404));
         }
 
-        // 📌 2. Generate Reset Token
+        //  2. Generate Reset Token
         const resetToken = user.generatePasswordResetToken();
         await user.save({ validateBeforeSave: false }); // Validation skip karega
 
-        // 📌 3. Create Reset URL
+        //  3. Create Reset URL
         const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-        // 📌 4. Email Content
+        //  4. Email Content
         const message = `
             <h3>Password Reset Request</h3>
             <p>Click on the link below to reset your password:</p>
@@ -206,13 +206,13 @@ export const forgotPassword = async (req, res, next) => {
     }
 };
 
-// ✅ (2) Reset Password API
+//  (2) Reset Password API
 export const resetPassword = async (req, res, next) => {
     try {
         const { token } = req.params;
         const { newPassword } = req.body;
 
-        // 📌 1. Hash the token & Find User
+        //  1. Hash the token & Find User
         const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
         const user = await User.findOne({
@@ -224,7 +224,7 @@ export const resetPassword = async (req, res, next) => {
             return next(new ErrorHandler("Invalid or expired token", 400));
         }
 
-        // 📌 2. Update Password
+        //  2. Update Password
         user.password = newPassword;
         user.passwordResetToken = undefined;
         user.passwordResetExpires = undefined;
