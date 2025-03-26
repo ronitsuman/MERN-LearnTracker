@@ -22,6 +22,19 @@ export const userSignup = async (req, res,next ) => {
 
         // Save in DB
         await newUser.save();
+        
+        // if you want auto login then we have to save the token when user signup 
+
+        // const accessToken = generateToken(newUser._id)
+        // res.status(201).json({
+        //     message:"User registerd Succesfully ",
+        //     accessToken,
+        //     user:{
+        //         id:newUser._id,
+        //         email:newUser.email,
+        //         category:newUser.category
+        //     }
+        // })
         res.status(201).json({ message: "User registered successfully" });
 
     } catch (error) {
