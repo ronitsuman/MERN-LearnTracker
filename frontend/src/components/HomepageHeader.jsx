@@ -1,26 +1,44 @@
 import React, { useState } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa'; // React Icons se hamburger aur close icons
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const HomepageHeader = () => {
-  const [isOpen, setIsOpen] = useState(false); // State for toggling menu
+  const [isOpen, setIsOpen] = useState(false);
+  const navigation = useNavigate()
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen); // Menu  toggle 
+    setIsOpen(!isOpen);
   };
 
+  const login = () => {
+    navigation('/login')
+  }
+  const handlesingup = ()=>{
+    navigation("/signup")
+  }
+
+
   return (
-    <div>
-      <nav className=" pl-2 pr-2 flex flex-row justify-between items-center ">
+    <div className="w-full h- bg-[#F3F4F6]">
+      <nav className="flex flex-row h-[100px] justify-between p-0 items-center px-4 sm:px-6 lg:px-3 lg:top-[-40px] lg:py-1">
         {/* Logo */}
         <div>
           <a href="/">
-            <img src="logo.png" alt="logo" className="h-[100px] w-[100px]" />
+            <img
+              src="logo.png"
+              alt="logo"
+              className="h-16 w-16 sm:h-20 sm:w-20 lg:h-[140px] lg:w-[140px]"
+            />
           </a>
         </div>
 
-        {/* Hamburger Icon  Mobile */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu}>
+        {/* Hamburger Icon for Mobile and Tablet */}
+        <div className="lg:hidden">
+          <button
+            onClick={toggleMenu}
+            aria-label="Toggle navigation menu"
+            className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+          >
             {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
@@ -29,32 +47,44 @@ const HomepageHeader = () => {
         <div
           className={`${
             isOpen ? 'flex' : 'hidden'
-          } md:flex flex-col md:flex-row absolute  md:static top-16 left-0 w-full md:w-auto bg-white  md:bg-transparent items-center justify-center md:justify-around gap-6 md:gap-12 p-4 md:p-0 md:pr-6 transition-all duration-300`}
+          } lg:flex flex-col lg:flex-row absolute lg:static top-[64px] sm:top-[80px] lg:top-[-80px] left-0 w-full lg:w-auto bg-white lg:bg-transparent items-center justify-center gap-4 sm:gap-6 lg:gap-8 p-4 lg:p-0 transition-all duration-300 z-50`}
         >
-          <a href="feature" className="   hover:bg-black p-2 min-w-screen text-center hover:text-white" onClick={() => setIsOpen(false)}>
+          <a
+            href="feature"
+            className="w-full lg:w-auto text-center py-2 px-2 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             Feature
           </a>
-          <a href="Work" className=" hover:bg-black hover:text-white p-2 min-w-screen text-center" onClick={() => setIsOpen(false)}>
+          <a
+            href="Work"
+            className="w-full lg:w-auto text-center py-2 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             How it works
           </a>
-          <a href="Testimonials" className=" hover:bg-black hover:text-white p-2 min-w-screen text-center" onClick={() => setIsOpen(false)}>
+          <a
+            href="Testimonials"
+            className="w-full lg:w-auto text-center py-2 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             Testimonials
           </a>
           <button
-            className="border rounded-md p-2  min-w-screen text-center hover:bg-gray-100"
-            onClick={() => setIsOpen(false)}
+            className="w-full lg:w-auto border border-gray-300 rounded-md py-2 px-4 text-center hover:bg-gray-100 transition-colors"
+            onClick={login}
           >
             Log in
           </button>
           <button
-            className="border rounded-md bg-black text-white p-2 min-w-screen text-center hover:bg-gray-800"
-            onClick={() => setIsOpen(false)}
+            className="w-full lg:w-auto border rounded-md bg-black text-white py-2 px-4 text-center hover:bg-gray-800 transition-colors"
+            onClick={handlesingup}
           >
-            Sign in
+            Sign up
           </button>
         </div>
       </nav>
-      <hr className='invisible border-gray-200 lg:visible ' />
+      <hr className="hidden  lg:block border-t border-gray-200  sm:mx-6 lg:mx-0  lg:w-full" />
     </div>
   );
 };
