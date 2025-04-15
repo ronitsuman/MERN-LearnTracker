@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   { path: '/resetPassword', element: <ResetPassword /> },
   { path: '/forgot-password', element: <ForgotPassword /> },
 
-  // 🔹 Protected Routes
+  //  Protected Routes
   {
     element: <ProtectedRoute />,  // Protected wrapper
     children: [

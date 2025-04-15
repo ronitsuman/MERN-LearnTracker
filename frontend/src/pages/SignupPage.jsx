@@ -29,7 +29,7 @@ const SignupPage = () => {
 
   //validate password Strength
   const isValidPassword = (password)=>{
-    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password);
+    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,}$/.test(password);
   }
 
   
@@ -117,6 +117,7 @@ const SignupPage = () => {
             <label htmlFor="password" className="text-lg font-medium">Password:</label>
             <input
               type="password"
+              
               id="password"
               onChange={handleChange}
               name='password'
