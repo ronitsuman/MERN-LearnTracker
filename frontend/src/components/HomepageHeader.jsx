@@ -50,21 +50,21 @@ const HomepageHeader = () => {
           } lg:flex flex-col lg:flex-row absolute lg:static top-[64px] sm:top-[80px] lg:top-[-80px] left-0 w-full lg:w-auto bg-white lg:bg-transparent items-center justify-center gap-4 sm:gap-6 lg:gap-8 p-4 lg:p-0 transition-all duration-300 z-50`}
         >
           <a
-            href="feature"
+            href="#feature"
             className="w-full lg:w-auto text-center py-2 px-2 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
             onClick={() => setIsOpen(false)}
           >
             Feature
           </a>
           <a
-            href="Work"
+            href="#Work"
             className="w-full lg:w-auto text-center py-2 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
             onClick={() => setIsOpen(false)}
           >
             How it works
           </a>
           <a
-            href="Testimonials"
+            href="#Testimonials"
             className="w-full lg:w-auto text-center py-2 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
             onClick={() => setIsOpen(false)}
           >
